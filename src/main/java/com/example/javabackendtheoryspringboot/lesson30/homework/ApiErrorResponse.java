@@ -1,0 +1,27 @@
+package com.example.javabackendtheoryspringboot.lesson30.homework;
+
+import java.time.LocalDateTime;
+
+public class ApiErrorResponse {
+    private String message;
+    private int statusCode;
+    private LocalDateTime timestamp;
+
+    public ApiErrorResponse(String message, int statusCode, LocalDateTime timestamp) {
+        this.message = message;
+        this.statusCode = statusCode;
+        this.timestamp = timestamp;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+}
