@@ -1,3 +1,4 @@
+/*
 package com.example.javabackendtheoryspringboot.general.practice.issuetracker.playground;
 
 import com.example.javabackendtheoryspringboot.general.practice.issuetracker.domain.Ticket;
@@ -46,3 +47,4 @@ public class IssueTrackerPlayground {
         ticketService.getTicketById(999L);
     }
 }
+*/

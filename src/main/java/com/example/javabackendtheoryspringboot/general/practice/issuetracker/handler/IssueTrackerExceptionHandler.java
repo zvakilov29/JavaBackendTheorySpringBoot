@@ -2,6 +2,9 @@ package com.example.javabackendtheoryspringboot.general.practice.issuetracker.ha
 
 import com.example.javabackendtheoryspringboot.general.practice.issuetracker.controller.TicketController;
 import com.example.javabackendtheoryspringboot.general.practice.issuetracker.dto.ApiErrorResponse;
+import com.example.javabackendtheoryspringboot.general.practice.issuetracker.exception.DuplicateTicketLabelAssignmentException;
+import com.example.javabackendtheoryspringboot.general.practice.issuetracker.exception.InvalidTicketStatusTransitionException;
+import com.example.javabackendtheoryspringboot.general.practice.issuetracker.exception.LabelNotFoundException;
 import com.example.javabackendtheoryspringboot.general.practice.issuetracker.exception.TicketNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +34,19 @@ public class IssueTrackerExceptionHandler {
         return new ResponseEntity<>(errorResponse, status);
     }
 
+    @ExceptionHandler(LabelNotFoundException.class)
+    public ResponseEntity<ApiErrorResponse> handleLabelNotFound(LabelNotFoundException ex) {
+        HttpStatus status = HttpStatus.NOT_FOUND;
+
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+                ex.getMessage(),
+                status.value(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidationErrors(MethodArgumentNotValidException ex) {
@@ -43,5 +59,34 @@ public class IssueTrackerExceptionHandler {
 
             errors.put(fieldName, errorMessage);
         }
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidTicketStatusTransitionException.class)
+    public ResponseEntity<ApiErrorResponse> handleInvalidStatusTransition(InvalidTicketStatusTransitionException ex) {
+        HttpStatus status = HttpStatus.CONFLICT;
+
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+                ex.getMessage(),
+                status.value(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
+    @ExceptionHandler(DuplicateTicketLabelAssignmentException.class)
+    public ResponseEntity<ApiErrorResponse> handleDuplicateTicketLabelAssignment(
+            DuplicateTicketLabelAssignmentException ex) {
+        HttpStatus status = HttpStatus.CONFLICT;
+
+        ApiErrorResponse errorResponse = new ApiErrorResponse(
+                ex.getMessage(),
+                status.value(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(errorResponse, status);
     }
 }
