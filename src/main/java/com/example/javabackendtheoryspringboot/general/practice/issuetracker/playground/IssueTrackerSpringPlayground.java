@@ -14,14 +14,16 @@ public class IssueTrackerSpringPlayground {
 
         TicketService ticketService = context.getBean(TicketService.class);
 
-        Ticket ticket = ticketService.createTicket(
+        /*Ticket ticket = ticketService.createTicket(
                 "Spring-managed TicketService",
                 "This ticket was created using a TicketService bean from the Spring context.",
                 TicketPriority.HIGH
-        );
+        );*/
 
+/*
         System.out.println("Created ticket ID: " + ticket.getId());
         System.out.println("Created ticket title: " + ticket.getTitle());
+*/
 
         context.close();
     }
